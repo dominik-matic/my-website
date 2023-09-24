@@ -1,5 +1,5 @@
 app/node_modules
 terraform/.terraform
-terraform/.terraform.ock.hcl
+terraform/.terraform.lock.hcl
 terraform/terraform.tfstate
 terraform/terraform.tfstate.backup
