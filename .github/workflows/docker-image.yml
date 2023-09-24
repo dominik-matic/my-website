@@ -28,6 +28,7 @@ jobs:
       run: docker push dominikmatic/my_website:latest
 
   deploy:
+    needs: build
 
     runs-on: ubuntu-latest
 
