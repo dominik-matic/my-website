@@ -9,6 +9,7 @@
     docker_image:
       name: dominikmatic/my_website:latest
       source: pull
+      force_source: true
 
   - name: (re)start a container
     docker_container:
