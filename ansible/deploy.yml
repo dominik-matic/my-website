@@ -1,0 +1,21 @@
+---
+
+- hosts: web_servers
+  become: true
+  tasks:
+
+  - name: pull a docker image
+    tags: docker
+    docker_image:
+      name: dominikmatic/my_website:latest
+      source: pull
+
+  - name: (re)start a container
+    docker_container:
+      name: my_website
+      image: dominikmatic/my_website:latest
+      state: started
+      restart: yes
+      ports:
+       - "80:3000"
+       - "443:3000"

@@ -1,0 +1,39 @@
+---
+
+- hosts: all
+  become: true
+  pre_tasks:
+
+  - name: install updates
+    tags: always
+    yum:
+      update_cache: yes
+      name: '*'
+      state: latest
+    when: ansible_distribution == "Amazon"
+
+
+- hosts: all
+  become: true
+  tasks:
+
+  - name: create ansible user
+    tags: always
+    user:
+      name: ansible
+      groups: root
+
+  - name: add ssh key for ansible
+    tags: always
+    authorized_key:
+      user: ansible
+      key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFJcgtEUAqiApSDv3uQcVQ7UFVkF5vmqXnfLNi6jpbaC ansible"
+
+  - name: add sudoers file for ansible
+    tags: always
+    copy:
+      content: "ansible ALL=(ALL) NOPASSWD: ALL"
+      dest: /etc/sudoers.d/ansible
+      owner: root
+      group: root
+      mode: 0440

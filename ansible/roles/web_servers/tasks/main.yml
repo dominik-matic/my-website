@@ -1,0 +1,19 @@
+- name: install docker
+  tags: docker
+  package:
+    name:
+      - docker
+    state: latest
+
+- name: start and enable docker service
+  tags: docker
+  service:
+    name: "docker"
+    state: started
+    enabled: yes
+
+- name: create a certs directory if it doesn't exist
+  ansible.builtin.file:
+    path: /home/ansible/certs
+    state: directory
+    mode: '0755'
