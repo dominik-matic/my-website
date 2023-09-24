@@ -1,0 +1,50 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'app/**'
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - 'app/**'
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: |
+        cd app
+        docker build -t dominikmatic/my_website:latest .
+    - name: Log into dockerhub
+      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+    - name: Push the Docker image
+      run: docker push dominikmatic/my_website:latest
+
+  deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Run ansible playbook
+      uses: dawidd6/action-ansible-playbook@v2
+      with:
+        # Required, playbook filepath
+        playbook: ansible/deploy.yml
+        # Optional, SSH private key
+        key: ${{secrets.ANSIBLE_PRIVATE_KEY}}
+        # Optional, literal inventory file contents
+        inventory: |
+          [web_servers]
+          3.78.5.76
+        # Optional, SSH known hosts file content
+        known_hosts: |
+          3.78.5.76 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBNkvtbUpMeBWVOG4nITgBkKOA2ih8/YhAOwpZw1hhmauDvpL49m96txcWn1eRviL6bYt/M2xJArtZzo6KCqKJbA=
+
+    
