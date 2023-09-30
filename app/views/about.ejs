@@ -1,6 +1,26 @@
-<%- include('partials/header', { title: 'About' }) %>
+<%- include('partials/header', { title: 'Dominik Matić - About' }) %>
     <%- include('partials/navbar', {about: 'active'}) %> 
-    <div class="container">
-        <h1>This is the about page</h1>
+    <div class="container pt-3 w-75">
+        <h1>How did I make this website?</h1>
+        <p>
+            This website is served to you by a <a class="text-white" href="https://nodejs.org/">node.js</a> app running
+            in a <a class = "text-white" href="https://www.docker.com/">Docker</a> container on an
+            <a class="text-white" href="https://aws.amazon.com/">AWS</a> instance.
+        </p>
+        <p>
+            All of the AWS infrastructure has been provisioned using <a class="text-white" href="https://www.terraform.io/">Terraform</a>,
+            and all of the instances have been configured using <a class="text-white" href="https://www.ansible.com/">Ansible</a>.
+        </p>
+        <p>
+            The domain was registered at <a class="text-white" href="https://www.godaddy.com/">GoDaddy</a>, and the certificate has been
+            acquired from <a class="text-white" href="https://letsencrypt.org/">Let's Encrypt</a>.
+        </p>
+        <p>
+            Of course, the website isn't set in stone, I'll add and remove stuff from it in the future (made easy by
+            <a class="text-white", href="https://github.com/features/actions">GitHub actions</a>). All of the relevant code
+            and version history can be found <a class="text-white" href="https://github.com/dominik-matic/my-website">here</a>.
+        </p>
+
+        
     </div>
 <%- include('partials/footer') %>

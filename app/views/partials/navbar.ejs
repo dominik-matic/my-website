@@ -1,10 +1,11 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+<div class="justify-content-center d-flex">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark w-75">
     <div class="container-fluid">
-        <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
-			<a class="navbar-brand mx-left" href="/">Dominik Matić</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".dual-collapse2">
+        <div class="w-100 order-1 order-md-0">
+			<button class="navbar-toggler me-2" type="button" data-bs-toggle="collapse" data-bs-target=".dual-collapse2">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            <a class="navbar-brand mx-left" href="/">Dominik Matić</a>
         </div>
         <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
             <ul class="navbar-nav ms-auto">
@@ -12,7 +13,7 @@
                     <a class="nav-link <% if(locals.home){ %> <%=home%><% } %>" href="/">Home</a>
                 </li>
 				<li class="nav-item">
-                    <a class="nav-link <% if(locals.about){ %> <%=about%><% } %>" href="/about">About</a>
+                    <a class="nav-link <% if(locals.about){ %> <%=about%><% } %>" href="/about">About the site</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link <% if(locals.mylinks){ %> <%=mylinks%><% } %>" href="/mylinks">My links</a>
@@ -21,3 +22,4 @@
         </div>
     </div>
 </nav>
+</div>

@@ -1,6 +1,30 @@
-<%- include('partials/header', { title: 'Dominik Matić' }) %>
+<%- include('partials/header', { title: 'Dominik Matić - My Links' }) %>
     <%- include('partials/navbar', {mylinks: 'active'}) %> 
-    <div class="container">
-        <h1>These are my links :)</h1>
+    <script>
+        function copyToClipboard() {
+            navigator.clipboard.writeText('dominikmatic@outlook.com');
+            var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+            var toastList = toastElList.map(function(toastEl) {
+                return new bootstrap.Toast(toastEl)
+            })
+            toastList.forEach(toast => toast.show())
+            setTimeout(() => {
+                toastList.forEach(toast => toast.hide())
+            }, 1000)
+        }
+    </script>
+    <div class="toast position-absolute top-0 end-0 p-3" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">Copied to clipboard!</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+      </div>
+
+    <div class="container pt-3 w-75 position:relative">
+        <h1>Where you can find me (and maybe hire me?) :)</h1>
+        <a href="#" type="button" class="m-3 btn btn-outline-primary btn-lg btn-block w-100">LinkedIn</a>
+        <a href="https://github.com/dominik-matic" type="button" class="m-3 btn btn-outline-light btn-lg btn-block w-100">GitHub</a>
+        <button onclick="copyToClipboard()" type="button" class="m-3 btn btn-outline-warning btn-lg btn-block w-100">Email (click to copy to clipboard)*</button>
+        <p>*if you have javascript disabled, here is my email in plaintext: dominikmatic@outlook.com</p>
     </div>
 <%- include('partials/footer') %>
