@@ -47,6 +47,6 @@ jobs:
           3.73.187.39
         # Optional, SSH known hosts file content
         known_hosts: |
-          3.78.5.76 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBNkvtbUpMeBWVOG4nITgBkKOA2ih8/YhAOwpZw1hhmauDvpL49m96txcWn1eRviL6bYt/M2xJArtZzo6KCqKJbA=
+          3.73.187.39 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFPYJDOesJo7cyobs6S4mjhhud13BpmG0GnLZ/Q8yf7Y
         options: |
               -u ansible    
