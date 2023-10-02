@@ -17,10 +17,14 @@ resource "aws_instance" "my_server" {
 
   vpc_security_group_ids = [aws_security_group.my_sg.id]
 
-
   tags = {
     Name = "my_server"
   }
+}
+
+resource "aws_ec2_instance_state" "my_server_state" {
+  instance_id = aws_instance.my_server.id
+  state       = "running"
 }
 
 # Create an Elastic IP
