@@ -20,3 +20,6 @@
       ports:
        - "80:3000"
        - "443:3000"
+      mounts:
+        - source: /etc/letsencrypt/
+          target: /etc/letsencrypt/

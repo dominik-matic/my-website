@@ -12,8 +12,17 @@
     state: started
     enabled: yes
 
-- name: create a certs directory if it doesn't exist
+- name: create a letsencrypt directory if it doesn't exist
   ansible.builtin.file:
-    path: /home/ansible/certs
+    path: /etc/letsencrypt/
     state: directory
     mode: '0755'
+
+- name: copy lentsencrypt files from host to remote
+  ansible.builtin.copy:
+    src: /etc/letsencrypt/
+    dest: /etc/letsencrypt/
+    owner: root
+    group: root
+    mode: '0644'
+
