@@ -4,10 +4,8 @@ const port = 3000
 
 app.set('view engine', 'ejs')
 
+app.use(express.static(__dirname + '/public')); 
 
-app.listen(port, () => {
-  console.log(`Server listening on port ${port}`)
-})
 
 app.get('/', (req, res) => {
   res.render('index.ejs')
@@ -21,6 +19,6 @@ app.get('/mylinks', (req, res) => {
   res.render('mylinks.ejs')
 })
 
-
-
-app.use(express.static(__dirname + '/public')); 
+app.listen(port, () => {
+  console.log(`Server listening on port ${port}`)
+})
