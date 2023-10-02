@@ -44,7 +44,7 @@ jobs:
         # Optional, literal inventory file contents
         inventory: |
           [web_servers]
-          3.78.5.76
+          3.73.187.39
         # Optional, SSH known hosts file content
         known_hosts: |
           3.78.5.76 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBNkvtbUpMeBWVOG4nITgBkKOA2ih8/YhAOwpZw1hhmauDvpL49m96txcWn1eRviL6bYt/M2xJArtZzo6KCqKJbA=
