@@ -18,7 +18,7 @@
       state: started
       restart: yes
       ports:
-       - "80:3000"
-       - "443:3000"
+       - "80:3080"
+       - "443:3443"
       volumes:
         - "/etc/letsencrypt/:/etc/letsencrypt/"
