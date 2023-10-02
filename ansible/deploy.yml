@@ -12,7 +12,7 @@
       force_source: true
 
   - name: (re)start a container
-    docker_container:
+    community.docker.docker_container:
       name: my_website
       image: dominikmatic/my_website:latest
       state: started
@@ -20,6 +20,5 @@
       ports:
        - "80:3000"
        - "443:3000"
-      mounts:
-        - source: /etc/letsencrypt/
-          target: /etc/letsencrypt/
+      volumes:
+        - "/etc/letsencrypt/:/etc/letsencrypt/"
