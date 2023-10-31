@@ -34,7 +34,7 @@ app.use((req, res, next) => {
 
 // logging middleware
 app.use((req, res, next) => {
-  logger.info(`Request from IP ${req.ip}, User Agent: ${req.userAgent}, Method: ${req.method}, URL: ${req.url}`);
+  logger.info(`Request from IP ${req.ip}, User Agent: ${req.headers['user-agent']}, Method: ${req.method}, URL: ${req.url}`);
 
   next();
 })
