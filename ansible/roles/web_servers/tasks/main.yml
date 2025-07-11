@@ -1,28 +1,13 @@
-- name: install docker
-  tags: docker
+- name: install cronie
   package:
-    name:
-      - docker
-    state: latest
+    name: cronie
+    state: present
 
-- name: start and enable docker service
-  tags: docker
+- name: ensure crond is running
   service:
-    name: "docker"
+    name: crond
     state: started
     enabled: yes
 
-- name: create a letsencrypt directory if it doesn't exist
-  ansible.builtin.file:
-    path: /etc/letsencrypt/
-    state: directory
-    mode: '0755'
-
-- name: copy lentsencrypt files from host to remote
-  ansible.builtin.copy:
-    src: /etc/letsencrypt/
-    dest: /etc/letsencrypt/
-    owner: root
-    group: root
-    mode: '0644'
-
+- import_tasks: docker.yml
+- import_tasks: certbot.yml
