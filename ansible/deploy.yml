@@ -2,23 +2,47 @@
 
 - hosts: web_servers
   become: true
+
+  vars:
+    deploy_path: /opt/my_website
+    nginx_conf_dir: "{{ deploy_path }}/nginx"
+
   tasks:
+  - name: ensure deploy directory exists
+    file:
+      path: "{{ deploy_path }}"
+      state: directory
+      owner: root
+      group: root
+      mode: '0755'
 
-  - name: pull a docker image
-    tags: docker
-    docker_image:
-      name: dominikmatic/my_website:latest
-      source: pull
-      force_source: true
+  - name: ensure nginx config directory exists
+    file:
+      path: "{{ nginx_conf_dir }}"
+      state: directory
+      owner: root
+      group: root
+      mode: '0755'
 
-  - name: (re)start the container
-    community.docker.docker_container:
-      name: my_website
-      image: dominikmatic/my_website:latest
-      state: started
-      restart: yes
-      ports:
-       - "80:3080"
-       - "443:3443"
-      volumes:
-        - "/etc/letsencrypt/:/etc/letsencrypt/"
+  - name: copy docker-compose.yml to deploy directory
+    copy:
+      src: files/deploy/docker-compose.yml
+      dest: "{{ deploy_path }}/docker-compose.yml"
+      owner: root
+      group: root
+      mode: '0644'
+
+  - name: copy nginx.conf to nginx config directory
+    copy:
+      src: files/deploy/nginx.conf
+      dest: "{{ nginx_conf_dir }}/nginx.conf"
+      owner: root
+      group: root
+      mode: '0644'
+
+  - name: run docker compose up -d
+    community.docker.docker_compose_v2:
+      project_src: "{{ deploy_path }}"
+      state: present
+      recreate: always
+      pull: always

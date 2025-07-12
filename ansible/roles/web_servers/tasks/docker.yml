@@ -1,0 +1,26 @@
+- name: install docker
+  tags: docker
+  package:
+    name:
+      - docker
+    state: latest
+
+- name: ensure docker CLI plugins directory exists
+  file:
+    path: /usr/local/lib/docker/cli-plugins
+    state: directory
+    mode: '0755'
+    recurse: yes
+
+- name: download docker compose plugin
+  get_url:
+    url: https://github.com/docker/compose/releases/latest/download/docker-compose-linux-x86_64
+    dest: /usr/local/lib/docker/cli-plugins/docker-compose
+    mode: '0755'
+
+- name: start and enable docker service
+  tags: docker
+  service:
+    name: "docker"
+    state: started
+    enabled: yes

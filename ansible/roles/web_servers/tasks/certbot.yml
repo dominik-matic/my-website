@@ -1,0 +1,35 @@
+# installing certbot on Amazon's EC2 is kinda weird
+# for whatever reason so let's put it into its own
+# file. If I ever become world famous and start
+# getting insane traffic where I need to scale up to
+# more instances, which need not necessarily be EC2,
+# I can import add other install tasks here for
+# different types of OSes. 
+- import_tasks: install_certbot_amazon_2023.yml
+  when:
+    - ansible_distribution == "Amazon"
+    - ansible_distribution_major_version | int >= 2023
+
+- name: check if certificate already exists
+  stat:
+    path: /etc/letsencrypt/live/dominikmatic.com/fullchain.pem
+  register: cert_stat
+
+- import_tasks: initial_cert.yml
+  when: not cert_stat.stat.exists
+
+- name: create certbot deploy hook script to reload nginx
+  copy:
+    dest: /etc/letsencrypt/renewal-hooks/deploy/reload-nginx.sh
+    content: |
+      #!/bin/bash
+      docker exec nginx nginx -s reload
+
+- name: set up weekly certbot renewal cron job
+  cron:
+    name: "weekly certbot renew with nginx reload"
+    job: "/usr/bin/certbot renew --quiet"
+    weekday: 0
+    hour: 4
+    minute: 20
+    user: root

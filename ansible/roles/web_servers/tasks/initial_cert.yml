@@ -1,0 +1,23 @@
+- name: check if nginx is running
+  community.docker.docker_container_info:
+    name: nginx
+  register: nginx_info
+
+- name: stop nginx (if running)
+  community.docker.docker_container:
+    name: nginx
+    state: stopped
+  when: nginx_info.container.State.Status == "running"
+
+- name: obtain initial Let's Encrypt certificate
+  command: >
+    certbot certonly --non-interactive --agree-tos
+    --email dominik.matic@outlook.com
+    -d dominikmatic.com -d www.dominikmatic.com
+    --standalone
+
+- name: start nginx (if it was running)
+  community.docker.docker_container:
+    name: nginx
+    state: started
+  when: nginx_info.container.State.Status == "running"

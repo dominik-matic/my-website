@@ -1,0 +1,30 @@
+# based on Rich Brome's answer on https://unix.stackexchange.com/questions/741450/installing-lets-encrypt-on-amazon-linux-2023/752625#752625
+- name: install dependencies for certbot
+  dnf:
+    name: augeas-libs
+    state: present
+
+- name: create certbot venv directory
+  file:
+    path: /opt/certbot
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: create python3 venv for certbot
+  command: python3 -m venv /opt/certbot
+  args:
+    creates: /opt/certbot/bin/activate
+
+- name: upgrade pip in certbot venv
+  command: /opt/certbot/bin/pip install --upgrade pip
+
+- name: install certbot in venv
+  command: /opt/certbot/bin/pip install certbot
+
+- name: symlink certbot executable
+  file:
+    src: /opt/certbot/bin/certbot
+    dest: /usr/bin/certbot
+    state: link
