@@ -95,6 +95,25 @@ resource "aws_security_group" "my_sg" {
     ipv6_cidr_blocks = ["::/0"]
   }
 
+  # Allow DNS (dddns - separate project)
+  ingress {
+    description      = "DDDNS-authserver"
+    from_port        = 53
+    to_port          = 53
+    protocol         = "udp"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+  # Allow dddns-apiserver (dddns - separate project)
+  ingress {
+    description      = "DDDNS-apiserver"
+    from_port        = 53535
+    to_port          = 53535
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
 
   # Allow all outgoing traffic
   egress {
