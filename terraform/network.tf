@@ -115,6 +115,17 @@ resource "aws_security_group" "my_sg" {
     ipv6_cidr_blocks = ["::/0"]
   }
 
+  # Allow heimdallr ops port (metrics + healthz). Restricted further by
+  # host-level iptables to a specific source IP.
+  ingress {
+    description      = "Heimdallr ops"
+    from_port        = 9090
+    to_port          = 9090
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
   # Allow all outgoing traffic
   egress {
     from_port        = 0

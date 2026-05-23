@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package heimdallr.v1;
+
+option go_package = "api/proto/heimdallr/v1;heimdallrv1";
+
+service RateLimiter {
+  rpc Check(CheckRequest) returns (CheckResponse);
+}
+
+message CheckRequest {
+  string key = 1;
+}
+
+message CheckResponse {
+  bool allowed = 1;
+  int64 remaining = 2;
+  int64 limit = 3;
+  int64 retry_after_ms = 4;
+}

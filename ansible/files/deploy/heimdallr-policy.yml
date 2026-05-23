@@ -1,0 +1,7 @@
+policies:
+  - name: ip
+    match: "ip:*"
+    algorithm: token_bucket
+    token_bucket:
+      limit: 60
+      refill_rate: 5
