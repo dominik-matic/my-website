@@ -5,6 +5,21 @@ services:
     restart: 'unless-stopped'
     networks:
       - internal
+    depends_on:
+      - heimdallr
+  heimdallr:
+    image: dominikmatic/heimdallr:latest
+    container_name: heimdallr
+    restart: 'unless-stopped'
+    ports:
+      - "9090:9090"
+    volumes:
+      - type: bind
+        source: /opt/my_website/heimdallr/policy.yml
+        target: /etc/heimdallr/policy.yml
+        read_only: true
+    networks:
+      - internal
   nginx:
     image: nginx:1.29.0-alpine
     container_name: nginx

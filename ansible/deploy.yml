@@ -6,6 +6,7 @@
   vars:
     deploy_path: /opt/my_website
     nginx_conf_dir: "{{ deploy_path }}/nginx"
+    heimdallr_conf_dir: "{{ deploy_path }}/heimdallr"
 
   tasks:
   - name: ensure deploy directory exists
@@ -23,6 +24,22 @@
       owner: root
       group: root
       mode: '0755'
+
+  - name: ensure heimdallr config directory exists
+    file:
+      path: "{{ heimdallr_conf_dir }}"
+      state: directory
+      owner: root
+      group: root
+      mode: '0755'
+
+  - name: copy heimdallr policy to heimdallr config directory
+    copy:
+      src: files/deploy/heimdallr-policy.yml
+      dest: "{{ heimdallr_conf_dir }}/policy.yml"
+      owner: root
+      group: root
+      mode: '0644'
 
   - name: copy docker-compose.yml to deploy directory
     copy:

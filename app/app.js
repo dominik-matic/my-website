@@ -4,6 +4,7 @@ const fs = require('node:fs')
 const https = require('node:https')
 const http = require('node:http')
 const winston = require('winston')
+const { rateLimit } = require('./rateLimiter')
 const httpport = 3080
 
 const logger = winston.createLogger({
@@ -19,8 +20,7 @@ const logger = winston.createLogger({
 
 
 app.set('view engine', 'ejs')
-
-app.use(express.static(__dirname + '/public')); 
+app.set('trust proxy', 1)
 
 // logging middleware
 app.use((req, res, next) => {
@@ -28,6 +28,11 @@ app.use((req, res, next) => {
 
   next();
 })
+
+// rate limit by client IP via heimdallr (fail-open)
+app.use(rateLimit(logger))
+
+app.use(express.static(__dirname + '/public'));
 
 app.get('/', (req, res) => {
   res.render('index.ejs')
